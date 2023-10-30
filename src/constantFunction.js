@@ -12,7 +12,6 @@ const getCardName = (cardId) => {
             return cards[i]
         }
     }
-
     return null
 
 }
@@ -320,7 +319,7 @@ const getHeptabaseData = new Promise((resolve, reject) => {
             data.pages = pages
 
             // 存储数据到本地缓存
-            // localStorage.setItem("heptabase_blog_data", JSON.stringify(data))
+            localStorage.setItem("heptabase_blog_data", JSON.stringify(data))
             // console.log(this.state.posts);
 
             console.log('getHeptabaseData return');
