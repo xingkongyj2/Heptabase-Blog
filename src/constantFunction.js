@@ -1,6 +1,5 @@
-import React from "react";
 import CONFIG from "./config";
-import { Button, Modal } from 'antd';
+import {Modal} from 'antd';
 
 const { confirm } = Modal;
 
@@ -248,7 +247,6 @@ const getHeptabaseData = new Promise((resolve, reject) => {
     console.log('heptabase_blog_data == undefined');
 
     const header = new Headers({ "Access-Control-Allow-Origin": "*" });
-
     // 获取 Heptabase 数据
     fetch(CONFIG.api_url, {
         method: "get",
@@ -257,11 +255,10 @@ const getHeptabaseData = new Promise((resolve, reject) => {
     })
         .then(res => res.json())
         .then(data => {
-            console.log(data)
+            console.log("Heptabase date:", data)
 
             // 按照时间排序卡片
             data.data.cards = data.data.cards.sort((a, b) => {
-
                 // 最近编辑时间
                 return b.lastEditedTime < a.lastEditedTime ? -1 : 1
 
@@ -269,9 +266,9 @@ const getHeptabaseData = new Promise((resolve, reject) => {
 
             let pages = {}
             // 获取 About、Projects 页面的数据
-            pages.about = undefined
-            pages.projects = undefined
-
+            pages.home = undefined
+            const firstKey = Object.keys(CONFIG.pages)[0]
+            const firstId = CONFIG.pages[firstKey];
             // 存储去重后的数组
             let new_cards = []
             // 存储卡片 ID，用户判断是否重复
@@ -279,17 +276,9 @@ const getHeptabaseData = new Promise((resolve, reject) => {
 
             for (let i = 0; i < data.data.cards.length; i++) {
 
-                // About
-                if (data.data.cards[i]['title'] === 'About') {
-
-                    pages.about = data.data.cards[i]
-
-                }
-
-                // Projects
-                if (data.data.cards[i]['title'] === 'Projects') {
-                    pages.projects = data.data.cards[i]
-
+                // 主页
+                if (data.data.cards[i]['id'] === firstId) {
+                    pages.home = data.data.cards[i]
                 }
 
                 // 去重
@@ -331,7 +320,7 @@ const getHeptabaseData = new Promise((resolve, reject) => {
             data.pages = pages
 
             // 存储数据到本地缓存
-            localStorage.setItem("heptabase_blog_data", JSON.stringify(data))
+            // localStorage.setItem("heptabase_blog_data", JSON.stringify(data))
             // console.log(this.state.posts);
 
             console.log('getHeptabaseData return');

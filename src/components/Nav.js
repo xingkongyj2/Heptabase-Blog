@@ -25,11 +25,11 @@ class Nav extends React.Component {
         // 加载 Tabs
         let tabs = []
         Object.keys(CONFIG['pages']).forEach(key => {
-
             let page
-            if (key === 'Activity') {
+            let keyValue = CONFIG['pages'][key];
+            if (keyValue === 'activity') {
                 page = <li >
-                    <Link to='/activity'>Activity</Link>
+                    <Link to='/activity'>活跃度</Link>
                 </li>
             } else {
                 page = <li onClick={this.handleNavBarClick}>

@@ -58,12 +58,12 @@ class Post extends React.Component {
 
         // 请求 hepta 数据 getHeptabaseData
         getHeptabaseData.then((res) => {
-
+            console.log("res: ", res)
             let heptabase_blog_data = res.data
 
             // 将数据保存到全局变量中
             HEPTABASE_DATA = heptabase_blog_data
-            HOME_DATA = res['pages']['about']
+            HOME_DATA = res['pages']['home']
 
             // 渲染 URL、数据
             this.herfToData()
